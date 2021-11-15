@@ -70,8 +70,9 @@ def get_umls_labels(keyword):
 def get_algorithm_labels(keyword_entered):
     keyword = keyword_entered.lower()
     ordered_lookups = get_lookups_ordered(keyword)
+    print(ordered_lookups)
     ordered_indexed = get_inverted_index_ordered(keyword, index)
-
+    print(ordered_indexed)
     # Get rid of repeats from the lookup table
     ordered_indexed = [i for i in ordered_indexed if i not in ordered_lookups]
 
@@ -82,7 +83,12 @@ def get_algorithm_labels(keyword_entered):
 # All modes -> best recommendation system
 def get_labels_for_keyword(keyword_entered):
     labels = get_algorithm_labels(keyword_entered)
+    print(labels)
     return labels
+
+def get_all_labels():
+    #return [label_data(label_id) for label_id in range(5)]
+    return [label_data(label_id) for label_id in range(len(umls))]
 
 
 def get_distance(term1, term2):
@@ -98,7 +104,7 @@ def get_inverted_index_ordered(term, inverted_index, num=15):
     scores = []
     for word in words:
         try:
-            stemmed += [stemmer.stem(word)]
+            stemmed += [word]
         except:
             return []
     count_list = []

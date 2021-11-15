@@ -1,7 +1,7 @@
 from flask import request, render_template, jsonify, url_for, redirect, g
 from index import app
 from .utils.files import save_annotations_file, get_file_data, get_filenames_from_directory
-from .utils.labels import get_umls_labels, get_labels_for_code, get_labels_for_keyword, get_colormap_data
+from .utils.labels import get_umls_labels, get_all_labels, get_labels_for_code, get_labels_for_keyword, get_colormap_data
 from .utils.umls_retrieve import retrieve_cui_info
 from .utils.tutorial import file_evaluation, clear_user_annotations, create_user_dir
 from .utils.log import add_log
@@ -76,9 +76,9 @@ def search_labels():
 def recommend_labels():
     incoming = request.get_json()
     if incoming["isKeyword"]:
-        labels = get_labels_for_keyword(incoming["searchTerm"])
+        labels = get_all_labels()#get_labels_for_keyword(incoming["searchTerm"])
     else:
-        labels = get_labels_for_code(incoming["searchTerm"])
+        labels = get_all_labels()#get_labels_for_code(incoming["searchTerm"])
 
     if labels or labels == []:
         return jsonify(labels=labels)
